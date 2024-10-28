@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Fill Opacity</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Set Image Fill Opacity</h2>
+  <label for="opacity">Opacity (0-100): </label>
+  <input type="number" id="opacity" min="0" max="100" value="100">
+  <button id="apply">Apply Opacity</button>
+
+  <script>
+    const applyButton = document.getElementById('apply');
+    applyButton.onclick = () => {
+      const opacity = document.getElementById('opacity').value;
+      parent.postMessage({ pluginMessage: { type: 'set-opacity', opacity: parseFloat(opacity) } }, '*');
+    };
+  </script>
+</body>
+</html>
