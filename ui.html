@@ -10,16 +10,39 @@
   </style>
 </head>
 <body>
-  <h2>Set Opacity</h2>
+  <h4>Set Opacity</h4>
   <label for="opacity">Opacity (0-100): </label>
   <input type="number" id="opacity" min="0" max="100" value="100">
-  <button id="apply">Apply Opacity</button>
 
+  <h4>Select Hand</h4>
+  <select id="hand" name="hand">
+    <option value="left">Left</option>
+    <option value="right">Right</option>
+  </select>
+
+  <h4>Select Position</h4>
+  <select id="pos" name="pos">
+    <option value="normal">Normal</option>
+    <option value="pinky">Resting phone on Pinky</option>
+  </select>
+
+  <br>
+  <br>
+  <button id="apply">Apply</button>
+
+  
   <script>
     const applyButton = document.getElementById('apply');
     applyButton.onclick = () => {
       const opacity = document.getElementById('opacity').value;
-      parent.postMessage({ pluginMessage: { type: 'set-opacity', opacity: parseFloat(opacity) } }, '*');
+      const handVal = document.getElementById('hand').value;
+      const posVal = document.getElementById('pos').value;
+      if (handVal == undefined && posVal == undefined){
+        parent.postMessage({ pluginMessage: { type: 'invalid', opacity: parseFloat(opacity), hand: handVal, pos: posVal } }, '*')
+      } else {
+        parent.postMessage({ pluginMessage: { type: 'set-opacity', opacity: parseFloat(opacity), hand: handVal, pos: posVal } }, '*');
+      }
+      
     };
   </script>
 </body>
