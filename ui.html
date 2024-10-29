@@ -1,36 +1,149 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Image Fill Opacity</title>
+  <title>Image Fill Opacity - Light Theme</title>
   <style>
+    /* Basic reset and styling */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: Arial, sans-serif;
+      background-color: #f9fafb; /* Light background */
+      color: #111827; /* Dark text color */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Centered container */
+    .container {
+      background-color: #ffffff; /* White container background */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    /* Intro section */
+    .intro {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .intro h2 {
+      font-size: 20px;
+      color: #111827; /* Dark text color for heading */
+      margin-bottom: 8px;
+    }
+
+    .intro ul {
+      font-size: 14px;
+      color: #4b5563; /* Medium gray for instructions */
+      list-style-type: decimal;
+      padding-left: 20px;
+      text-align: left;
+    }
+
+    .intro ul li {
+      margin-bottom: 8px;
+    }
+
+    /* Title styling */
+    h4 {
+      font-size: 16px;
+      color: #111827; /* Dark text color for titles */
+      margin-bottom: 8px;
+    }
+
+    /* Label styling */
+    label {
+      font-size: 14px;
+      color: #6b7280; /* Gray label color */
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* Input and select styling */
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #d1d5db; /* Light border */
+      border-radius: 4px;
+      font-size: 14px;
+      color: #111827; /* Dark text color */
+      background-color: #f9fafb; /* Light input background */
+      transition: border-color 0.2s ease-in-out;
+    }
+
+    input[type="number"]:focus,
+    select:focus {
+      border-color: #2563eb; /* Blue accent for focus */
+      outline: none;
+    }
+
+    /* Button styling */
+    button {
+      width: 100%;
       padding: 10px;
+      font-size: 14px;
+      color: #ffffff;
+      background-color: #2563eb; /* Blue button color */
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #1e40af; /* Darker blue on hover */
+    }
+
+    button:active {
+      background-color: #1d4ed8; /* Even darker blue on active */
     }
   </style>
 </head>
 <body>
-  <h4>Set Opacity</h4>
-  <label for="opacity">Opacity (0-100): </label>
-  <input type="number" id="opacity" min="0" max="100" value="100">
+  <div class="container">
+    <!-- Intro section -->
+    <div class="intro">
+      <h2>Instructions</h2>
+      <ul>
+        <li>Parent Layer should be a Frame</li>
+        <li>Detach Instance (if the Frame is a component or an instance)</li>
+        <li>Choose Frame(s)</li>
+        <li>Choose desired Opacity,Position and Hand and click Apply</li>
+      </ul>
+    </div>
 
-  <h4>Select Hand</h4>
-  <select id="hand" name="hand">
-    <option value="left">Left</option>
-    <option value="right">Right</option>
-  </select>
+    <!-- Form content -->
+    <h4>Set Opacity</h4>
+    <label for="opacity">Opacity (0-100):</label>
+    <input type="number" id="opacity" min="0" max="100" value="70">
 
-  <h4>Select Position</h4>
-  <select id="pos" name="pos">
-    <option value="normal">Normal</option>
-    <option value="pinky">Resting phone on Pinky</option>
-  </select>
+    <h4>Select Hand</h4>
+    <select id="hand" name="hand">
+      <option value="left">Left</option>
+      <option value="right">Right</option>
+    </select>
 
-  <br>
-  <br>
-  <button id="apply">Apply</button>
+    <h4>Select Position</h4>
+    <select id="pos" name="pos">
+      <option value="normal">Normal</option>
+      <option value="pinky">Resting phone on Pinky</option>
+    </select>
 
-  
+    <button id="apply">Apply</button>
+  </div>
+
   <script>
     const applyButton = document.getElementById('apply');
     applyButton.onclick = () => {
@@ -42,7 +155,6 @@
       } else {
         parent.postMessage({ pluginMessage: { type: 'set-opacity', opacity: parseFloat(opacity), hand: handVal, pos: posVal } }, '*');
       }
-      
     };
   </script>
 </body>
