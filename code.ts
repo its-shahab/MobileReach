@@ -22,8 +22,14 @@ async function addGradientBackgroundToFrames(frameNodes: readonly SceneNode[], o
   
 
   for (const frameNode of frameNodes) {
-    // if (frameNode.type === "FRAME"){
-    //   console.log(frameNode.fills)
+    // if (frameNode.type === "FRAME" && frameNode.layoutMode != "NONE"){
+    //   frameNode.layoutMode = "NONE";
+    //   console.log(frameNode.layoutMode);
+    //   const scaleFactorWidth = 617.78 / frameNode.width;
+    //   const scaleFactorHeight = 1339.48 / frameNode.height;
+    //   const scaleFactor = (scaleFactorWidth + scaleFactorHeight) / 2;
+    //   frameNode.rescale(scaleFactor);
+    //   frameNode.resize(617.78, 1339.48)
     // }
     //setting gradient stops and transforms according to position and hand
 
