@@ -2,6 +2,7 @@
 
 async function addGradientBackgroundToFrames(frameNodes: readonly SceneNode[], opacity: number, hand: string, position: string) {
   console.log("in gradient",opacity,hand,position);
+  // ThumbReach Gradients
   const GTNormalR = [
     [-0.37848758697509766, -0.5260326862335205, 1.108984351158142], // Horizontal scale (59.7%) and horizontal position (78.61%)
     [0.299323171377182, -1.018005132675171, 0.8674774169921875] // Vertical scale (97.75%) and vertical position (59.21%)
@@ -22,16 +23,7 @@ async function addGradientBackgroundToFrames(frameNodes: readonly SceneNode[], o
   
 
   for (const frameNode of frameNodes) {
-    // if (frameNode.type === "FRAME" && frameNode.layoutMode != "NONE"){
-    //   frameNode.layoutMode = "NONE";
-    //   console.log(frameNode.layoutMode);
-    //   const scaleFactorWidth = 617.78 / frameNode.width;
-    //   const scaleFactorHeight = 1339.48 / frameNode.height;
-    //   const scaleFactor = (scaleFactorWidth + scaleFactorHeight) / 2;
-    //   frameNode.rescale(scaleFactor);
-    //   frameNode.resize(617.78, 1339.48)
-    // }
-    //setting gradient stops and transforms according to position and hand
+    // Setting gradient stops and transforms according to position and hand
 
     let GT: Transform  | undefined;
     let GS: number;
