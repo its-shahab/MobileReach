@@ -90,10 +90,14 @@ figma.ui.onmessage = (msg) => {
     } else {
       figma.notify("No frames selected.");
     }
+  } else if (msg.type === 'resize-small') {
+    figma.ui.resize(400, 500); // Resize to smaller dimensions
+  } else if (msg.type === 'resize-large') {
+    figma.ui.resize(400, 750); // Resize to larger dimensions
   } else {
     figma.notify("Enter All Inputs.")
   }
 };
 
 // Show the UI
-figma.showUI(__html__,{ width: 400, height: 650, title: "ThumbSpan" });
+figma.showUI(__html__,{ width: 400, height: 750, title: "ThumbSpan" });

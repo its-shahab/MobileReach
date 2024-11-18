@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Image Fill Opacity - Light Theme</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     /* Basic reset and styling */
     * {
@@ -30,37 +31,48 @@
       width: 100%;
     }
 
-    /* Intro section */
-    .intro {
-      text-align: left;
+    /* Warning message styling */
+    .warning {
+      background-color: #fff3cd; /* Light yellow background */
+      color: #856404; /* Dark yellow text */
+      border: 1px solid #ffeeba; /* Yellow border */
+      border-radius: 8px;
+      padding: 16px;
       margin-bottom: 20px;
     }
 
-    .intro h2 {
-      font-size: 20px;
-      color: #111827; /* Dark text color for heading */
-      margin-bottom: 8px;
+    .warning-header {
+      display: flex;
+      align-items: center;
     }
 
-    .intro ul {
-      font-size: 12px;
-      color: #4b5563; /* Medium gray for instructions */
-      line-height: 1.0;
-      list-style-type: decimal;
-      padding-left: 10px;
-      text-align: left;
-    }
-    .intro p {
-      font-size: 12px;
-      line-height: 1.3;
-      color: #4b5563; /* Medium gray for instructions */
-      list-style-type: decimal;
-      padding-left: 0px;
-      text-align: left;
+    .warning-header .material-icons {
+      font-size: 24px;
+      color: #856404; /* Icon matches text color */
     }
 
-    .intro ul li {
-      margin-bottom: 8px;
+    .warning-content {
+      font-size: 14px;
+      line-height: 1.5;
+      margin-top: 12px;
+    }
+
+    .warning-content.hidden {
+      display: none;
+    }
+
+    .warning-footer {
+      text-align: right;
+      margin-top: 12px;
+    }
+
+    .warning-footer button {
+      background: #5a4505;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
     }
 
     /* Title styling */
@@ -109,10 +121,7 @@
       border-radius: 4px;
       cursor: pointer;
       transition: background-color 0.2s ease-in-out;
-    }
-
-    button:hover {
-      background-color: #1e40af; /* Darker blue on hover */
+      margin-top: 10px;
     }
 
     button:active {
@@ -122,25 +131,27 @@
 </head>
 <body>
   <div class="container">
-    <!-- Intro section -->
-    <div class="intro">
-      <h2>Instructions</h2>
-      <p>This plugin is meant to be used <b>after</b> the prototype has been created. 
-        Follow the steps below to ensure that the thumb span is represented accurately</p>
-        <br>
-      <ul>
-        <li>Make a copy of the Layer</li>
-        <li>Top Layer of every screen should be a Frame with <b><u>no</u></b> auto layout</li>
-        <li>Detach Instance(s) <b><u>if</u></b> it(they) is(are) a component or an instance</li>
-        <li><b><u>Remove Auto Layout </u></b>if present</li>
-        <li><b><u>Scale</u></b> the Frame(s) to the following dimensions <b><u>617.78 x 1339.48</u></b></li>
-        <li>Choose the Parent Frame(s)</li>
-        <li>Click Apply</li>
-      </ul>
+    <!-- Warning Section -->
+    <div class="warning">
+      <div class="warning-header">
+          <strong>Instructions</strong>
+      </div>
+      <div class="warning-content" id="warningContent">
+        <p>This plugin should be used <b>after</b> the prototype is created. Follow these steps for accuracy:</p>
+        <ul style="padding-left: 20px; margin-top: 8px;">
+          <li>Make a copy of the Layer.</li>
+          <li><b>Top Layer must be a Frame</b> with no auto layout.</li>
+          <li>Detach Instance(s) if they are components or instances.</li>
+          <li>Remove Auto Layout if present.</li>
+          <li>Scale Frame(s) to <b>617.78 x 1339.48</b>.</li>
+          <li>Select the Parent Frame(s).</li>
+          <li>Click Apply.</li>
+        </ul>
+      </div>
+      <div class="warning-footer">
+        <button id="toggleWarning">Minimize</button>
+      </div>
     </div>
-
-    <hr>
-    <br>
 
     <!-- Form content -->
     <h4>Set Opacity</h4>
@@ -148,14 +159,14 @@
     <input type="number" id="opacity" min="0" max="100" value="70">
 
     <h4>Select Hand</h4>
-    <label for="hand">For both hands, apply both one after another </label>
+    <label for="hand">For both hands, apply one after the other:</label>
     <select id="hand" name="hand">
       <option value="left">Left</option>
       <option value="right">Right</option>
     </select>
 
     <h4>Select Position</h4>
-    <label for="pos">Refers to how the user holds the phone, Please see the figma plugin page for details about the position</label>
+    <label for="pos">Refers to how the user holds the phone. See the Figma plugin page for details:</label>
     <select id="pos" name="pos">
       <option value="normal">Normal</option>
       <option value="pinky">Resting phone on Pinky Finger</option>
@@ -165,15 +176,34 @@
   </div>
 
   <script>
+    // Handle Apply button
     const applyButton = document.getElementById('apply');
     applyButton.onclick = () => {
       const opacity = document.getElementById('opacity').value;
-      const handVal = document.getElementById('hand').value;
-      const posVal = document.getElementById('pos').value;
-      if (handVal == undefined && posVal == undefined){
-        parent.postMessage({ pluginMessage: { type: 'invalid', opacity: parseFloat(opacity), hand: handVal, pos: posVal } }, '*')
+      const hand = document.getElementById('hand').value;
+      const position = document.getElementById('pos').value;
+
+      parent.postMessage({
+        pluginMessage: {
+          type: 'set-opacity',
+          opacity: parseFloat(opacity),
+          hand,
+          pos: position
+        }
+      }, '*');
+    };
+
+    // Handle Warning Toggle button
+    const toggleWarningButton = document.getElementById('toggleWarning');
+    const warningContent = document.getElementById('warningContent');
+    toggleWarningButton.onclick = () => {
+      warningContent.classList.toggle('hidden');
+      if(warningContent.classList.contains('hidden')){
+        toggleWarningButton.textContent = "Expand";
+        parent.postMessage({ pluginMessage: { type: 'resize-small' } }, '*');
       } else {
-        parent.postMessage({ pluginMessage: { type: 'set-opacity', opacity: parseFloat(opacity), hand: handVal, pos: posVal } }, '*');
+        toggleWarningButton.textContent = "Minimize";
+        parent.postMessage({ pluginMessage: { type: 'resize-large' } }, '*');
       }
     };
   </script>
